@@ -1,0 +1,118 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>CreamLora - Global Beauty Reference</title>
+    <meta name="description" content="Your global beauty expert. Buy 100% authentic skincare, makeup, and perfume products worldwide. Authentic products to enhance your daily life." />
+    <meta name="keywords" content="beauty, skincare, makeup, perfumes, authentic products, CreamLora" />
+    
+    <!-- Open Graph / Facebook -->
+    <meta property="og:type" content="website" />
+    <meta property="og:url" content="https://creamlora.ma/" />
+    <meta property="og:title" content="CreamLora - Global Beauty Reference" />
+    <meta property="og:description" content="Your global beauty expert. Buy 100% authentic skincare, makeup, and perfume products worldwide." />
+    <meta property="og:image" content="https://picsum.photos/seed/beauty/1200/630" />
+
+    <!-- Twitter -->
+    <meta property="twitter:card" content="summary_large_image" />
+    <meta property="twitter:url" content="https://creamlora.ma/" />
+    <meta property="twitter:title" content="CreamLora - Global Beauty Reference" />
+    <meta property="twitter:description" content="Your global beauty expert. Buy 100% authentic skincare, makeup, and perfume products worldwide." />
+    <meta property="twitter:image" content="https://picsum.photos/seed/beauty/1200/630" />
+    <script>
+      /**
+       * Fix for "Cannot set property fetch of #<Window> which has only a getter"
+       * and other "White Screen" issues related to global variable conflicts.
+       */
+      (function() {
+        const ignoreProps = ['fetch', 'XMLHttpRequest', 'FileReader', 'FormData', 'Blob'];
+        
+        // Try to add no-op setters to window and its prototypes to prevent fatal errors
+        // when libraries try to overwrite these read-only properties.
+        const targets = [window, Object.getPrototypeOf(window)];
+        if (typeof Window !== 'undefined' && Window.prototype) targets.push(Window.prototype);
+        
+        targets.forEach(target => {
+          if (!target) return;
+          ignoreProps.forEach(prop => {
+            try {
+              const desc = Object.getOwnPropertyDescriptor(target, prop);
+              if (desc && desc.configurable && !desc.set) {
+                Object.defineProperty(target, prop, {
+                  get: desc.get || (() => window[prop]),
+                  set: (v) => { console.warn(`Ignored attempt to overwrite ${prop} on`, target); },
+                  configurable: true,
+                  enumerable: true
+                });
+              }
+            } catch (e) {}
+          });
+        });
+
+        const handler = {
+          get(target, prop) {
+            if (prop === 'global' || prop === 'globalThis' || prop === 'window' || prop === 'self') {
+              return globalProxy;
+            }
+            const value = target[prop];
+            if (typeof value === 'function' && !/^[A-Z]/.test(prop)) {
+              return value.bind(target);
+            }
+            return value;
+          },
+          set(target, prop, value) {
+            if (ignoreProps.includes(prop)) return true;
+            try {
+              target[prop] = value;
+            } catch (e) {}
+            return true;
+          },
+          defineProperty(target, prop, descriptor) {
+            if (ignoreProps.includes(prop)) return true;
+            try {
+              return Reflect.defineProperty(target, prop, descriptor);
+            } catch (e) {
+              return true;
+            }
+          },
+          deleteProperty(target, prop) {
+            if (ignoreProps.includes(prop)) return true;
+            try {
+              return Reflect.deleteProperty(target, prop);
+            } catch (e) {
+              return true;
+            }
+          }
+        };
+
+        const globalProxy = new Proxy(window, handler);
+
+        try {
+          Object.defineProperty(window, 'global', { value: globalProxy, configurable: true, writable: true });
+          Object.defineProperty(window, 'globalThis', { value: globalProxy, configurable: true, writable: true });
+        } catch (e) {
+          window.global = globalProxy;
+          window.globalThis = globalProxy;
+        }
+
+        if (typeof process === 'undefined') {
+          window.process = { env: { NODE_ENV: 'development' }, nextTick: (cb) => setTimeout(cb, 0), browser: true };
+        }
+
+        // Global error handler to catch and log errors that might cause a white screen
+        window.addEventListener('error', function(event) {
+          console.error('Global Error Caught:', event.error || event.message);
+        });
+        window.addEventListener('unhandledrejection', function(event) {
+          console.error('Unhandled Promise Rejection:', event.reason);
+        });
+      })();
+    </script>
+  </head>
+  <body>
+    <div id="root"></div>
+    <script type="module" src="/src/main.tsx"></script>
+  </body>
+</html>
+

@@ -1,0 +1,24 @@
+node_modules/@protobufjs/fetch/tests/index.js:var fetch = require("..");
+node_modules/formdata-polyfill/FormData.js:  const _fetch = global.Request && global.fetch
+node_modules/formdata-polyfill/FormData.js:    global.fetch = function (input, init) {
+node_modules/protobufjs/src/root.js:Root.prototype.fetch = util.fetch;
+node_modules/.vite/deps/@google_genai.js:  throw new Error("`fetch` is not defined as a global; Either pass `fetch` to the client, `new GeminiNextGenAPIClient({ fetch })` or polyfill the global, `globalThis.fetch = fetch`");
+node_modules/.vite/deps/@google_genai.js:    this.fetch = (_j = options.fetch) !== null && _j !== void 0 ? _j : getDefaultFetch();
+node_modules/.vite/deps/react-router-dom.js:      router2.fetch = instrumentedFetch;
+node_modules/.vite/deps/react-router-dom.js:    if (prefetch === "render") {
+node_modules/.vite/deps/react-router-dom.js:    if (prefetch === "viewport") {
+node_modules/.vite/deps/react-router-dom.js:    prefetch = "none",
+node_modules/.vite/deps/@supabase_supabase-js.js:    this.fetch = resolveFetch(customFetch);
+node_modules/.vite/deps/@supabase_supabase-js.js:    if (builder.fetch) this.fetch = builder.fetch;
+node_modules/.vite/deps/@supabase_supabase-js.js:    else this.fetch = fetch;
+node_modules/.vite/deps/@supabase_supabase-js.js:    const _fetch = this.fetch;
+node_modules/.vite/deps/@supabase_supabase-js.js:    this.fetch = fetch$1;
+node_modules/.vite/deps/@supabase_supabase-js.js:      fetch: (_this$fetch = this.fetch) !== null && _this$fetch !== void 0 ? _this$fetch : fetch,
+node_modules/.vite/deps/@supabase_supabase-js.js:    if (timeout !== void 0 && timeout > 0) this.fetch = (input, init) => {
+node_modules/.vite/deps/@supabase_supabase-js.js:    else this.fetch = originalFetch;
+node_modules/.vite/deps/@supabase_supabase-js.js:      fetch: (_this$fetch = this.fetch) !== null && _this$fetch !== void 0 ? _this$fetch : fetch,
+node_modules/.vite/deps/@supabase_supabase-js.js:    this.fetch = this._resolveFetch(options === null || options === void 0 ? void 0 : options.fetch);
+node_modules/.vite/deps/@supabase_supabase-js.js:    this.fetch = resolveFetch2(fetch$1);
+node_modules/.vite/deps/@supabase_supabase-js.js:    this.fetch = resolveFetch3(fetch2);
+node_modules/.vite/deps/@supabase_supabase-js.js:    this.fetch = resolveFetch3(settings.fetch);
+node_modules/.vite/deps/@supabase_supabase-js.js:    this.fetch = fetchWithAuth(supabaseKey, this._getAccessToken.bind(this), settings.global.fetch);
